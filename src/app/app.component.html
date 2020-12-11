@@ -1,0 +1,33 @@
+
+<h1 class="align-center">Welcome !! Let's play Minesweeper.</h1>
+<h3 class="align-center">Click on a tile. Be careful of Mines below some of them</h3>
+<table>
+  <tr *ngFor="let row of landmine.tiles; index as y">
+    <td
+      *ngFor="let tile of row; index as x"
+      (click)="checkTile(tile)"
+      (contextmenu)="$event.preventDefault(); mine(tile)"
+    >
+      <!-- <div>Status: {{ tile.status }}</div> -->
+      <div *ngIf="tile.status === 'clear' && !tile.mine" class="sm-block" style="padding-left: 30%;">{{ tile.proximityMines }}</div>
+      <div *ngIf="tile.status === 'flagMine'" class="sm-block">
+        <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+          <path fill="#000000" d="M14.4,6L14,4H5V21H7V14H12.6L13,16H20V6H14.4Z" />
+        </svg>
+      </div>
+      <div *ngIf="tile.mine && tile.status === 'clear'" class="sm-block danger">
+      </div>
+    </td>
+  </tr>
+</table>
+<button  *ngIf="gameover" class="error" tabindex="-1" type="reset">
+    Sorry !! 🙁
+    <br>
+    You Lost . Click the button below to play Again
+  </button>
+  <button  *ngIf="winner" class="error" tabindex="-1" type="reset">
+      Yippe !!
+      <br>
+      You Won . Click the button below to play Again
+    </button>
+<button (click)="reset()">Play Again</button>
